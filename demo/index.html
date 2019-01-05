@@ -1,0 +1,48 @@
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<body>
+
+<div class="fix-fit-scroll">
+
+    <div class="second-scope scope"></div>
+
+    <div>
+        <button id="second-scope-open">Open</button>
+
+        <button id="second-scope-close">Close</button>
+    </div>
+
+    <div class="first-scope scope"></div>
+
+</div>
+
+</body>
+
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+
+<script src="../node_modules/clay.js/dist/clay.js"></script>
+
+<script src="../src/jquery.fix-fit-scroll.js"></script>
+
+<script>
+    $(function () {
+
+        $('.fix-fit-scroll').fitFixScroll({/*scrollBottom: false*/});
+
+        for (var i = 1; i <= 5; i++) {
+            $('.first-scope').append('<button>Button' + i + '</button>');
+        }
+
+        for (var i = 6; i < 25; i++) {
+            $('.second-scope').append('<button>Button' + i + '</button>');
+        }
+
+        $('#second-scope-open').click(function () {
+            $('.second-scope').show();
+        });
+
+        $('#second-scope-close').click(function () {
+            $('.second-scope').hide();
+        });
+    });
+</script>

@@ -1,0 +1,27 @@
+html, body {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.fix-fit-scroll {
+    position: fixed;
+    bottom: 25px;
+}
+
+.fix-fit-scroll {
+    background-color: green;
+    width: 100%;
+}
+
+.fix-fit-scroll > div {
+    background-color: red;
+}
+
+.scope > button {
+    display: block;
+    margin: 25px;
+}
+
+.second-scope {
+    display: none;
+}
