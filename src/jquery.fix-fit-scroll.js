@@ -45,6 +45,10 @@
                         'overflow-y': 'hidden'
                     });
                 }
+
+                if (scrollBottom) {
+                    jQuery($this).scrollTop(jQuery($this).children('div').height());
+                }
             });
 
             jQuery(window).resize(function () {
