@@ -44,8 +44,6 @@
 
         return this.each(function () {
 
-            jQuery(this).html('<div>' + jQuery(this).html() + '</div>');
-
             new Clay(this, {resize: false}).on('resize', function (size) {
 
                 var wrapperFitsWindow =
