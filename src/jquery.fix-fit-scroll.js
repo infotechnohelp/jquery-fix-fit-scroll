@@ -40,9 +40,39 @@
             mobileDevice = defaultOptions.mobileDevice;
         }
 
-        var $this = this;
 
         return this.each(function () {
+
+            var $this = this;
+
+            function windowResized(){
+                var wrapperFitsWindow =
+                    (jQuery($this).outerHeight() + parseInt(jQuery($this).css('bottom'))) <= jQuery(window).height();
+
+                if (!wrapperFitsWindow) {
+                    jQuery($this).css({
+                        height: jQuery(window).height() - parseInt(jQuery($this).css('bottom')),
+                        'overflow-y': 'scroll'
+                    });
+
+                    if (mobileDevice) {
+                        if (scrollBottom && !inputIsFocused($this)) {
+                            jQuery($this).scrollTop(jQuery($this).children('div').height());
+                        }
+                    } else {
+                        if (scrollBottom) {
+                            jQuery($this).scrollTop(jQuery($this).children('div').height());
+                        }
+                    }
+                } else {
+                    jQuery($this).css({
+                        height: 'auto',
+                        'overflow-y': 'hidden'
+                    });
+                }
+            }
+
+            windowResized();
 
             new Clay(this, {resize: false}).on('resize', function (size) {
 
@@ -90,30 +120,7 @@
             });
 
             jQuery(window).resize(function () {
-                var wrapperFitsWindow =
-                    (jQuery($this).height() + parseInt(jQuery($this).css('bottom'))) <= jQuery(window).height();
-
-                if (!wrapperFitsWindow) {
-                    jQuery($this).css({
-                        height: jQuery(window).height() - parseInt(jQuery($this).css('bottom')),
-                        'overflow-y': 'scroll'
-                    });
-
-                    if (mobileDevice) {
-                        if (scrollBottom && !inputIsFocused($this)) {
-                            jQuery($this).scrollTop(jQuery($this).children('div').height());
-                        }
-                    } else {
-                        if (scrollBottom) {
-                            jQuery($this).scrollTop(jQuery($this).children('div').height());
-                        }
-                    }
-                } else {
-                    jQuery($this).css({
-                        height: 'auto',
-                        'overflow-y': 'hidden'
-                    });
-                }
+                windowResized();
             });
         });
     };
