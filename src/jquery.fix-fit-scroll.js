@@ -45,7 +45,12 @@
 
             var $this = this;
 
-            function windowResized(){
+            function windowResized(scrollBottomRestricted){
+
+                if(scrollBottomRestricted === undefined){
+                    scrollBottomRestricted = false;
+                }
+
                 var wrapperFitsWindow =
                     (jQuery($this).outerHeight() + parseInt(jQuery($this).css('bottom'))) <= jQuery(window).height();
 
@@ -56,11 +61,11 @@
                     });
 
                     if (mobileDevice) {
-                        if (scrollBottom && !inputIsFocused($this)) {
+                        if (scrollBottom && !inputIsFocused($this) && !scrollBottomRestricted ) {
                             jQuery($this).scrollTop(jQuery($this).children('div').height());
                         }
                     } else {
-                        if (scrollBottom) {
+                        if (scrollBottom && !scrollBottomRestricted) {
                             jQuery($this).scrollTop(jQuery($this).children('div').height());
                         }
                     }
@@ -72,7 +77,7 @@
                 }
             }
 
-            windowResized();
+            windowResized(true);
 
             new Clay(this, {resize: false}).on('resize', function (size) {
 
