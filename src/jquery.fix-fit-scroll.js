@@ -1,15 +1,39 @@
 (function (jQuery) {
 
-    jQuery.fn.fitFixScroll = function (options) {
+    function inputIsFocused(element) {
+        var result = false;
+
+        jQuery(element).find('input').each(function () {
+            if (jQuery(this).is(":focus")) {
+                result = true;
+            }
+        });
+
+        jQuery(element).find('textarea').each(function () {
+            if (jQuery(this).is(":focus")) {
+                result = true;
+            }
+        });
+
+        return result;
+    }
+
+    jQuery.fn.fixFitScroll = function (options) {
 
         var defaultOptions = {
-            scrollBottom: true
+            scrollBottom: true,
+            mobileDevice: false
         };
 
         var scrollBottom = options.scrollBottom;
+        var mobileDevice = options.mobileDevice;
 
         if (options.scrollBottom === undefined) {
             scrollBottom = defaultOptions.scrollBottom;
+        }
+
+        if (options.mobileDevice === undefined) {
+            mobileDevice = defaultOptions.mobileDevice;
         }
 
         var $this = this;
@@ -20,7 +44,7 @@
 
             new Clay(this, {resize: false}).on('resize', function (size) {
 
-                var wrapperFitsWindow = 
+                var wrapperFitsWindow =
                     (jQuery($this).height() + parseInt(jQuery($this).css('bottom'))) <= jQuery(window).height();
 
                 if (!wrapperFitsWindow) {
@@ -29,8 +53,14 @@
                         'overflow-y': 'scroll'
                     });
 
-                    if (scrollBottom) {
-                        jQuery($this).scrollTop(jQuery($this).children('div').height());
+                    if (mobileDevice) {
+                        if (scrollBottom && !inputIsFocused($this)) {
+                            jQuery($this).scrollTop(jQuery($this).children('div').height());
+                        }
+                    } else {
+                        if (scrollBottom) {
+                            jQuery($this).scrollTop(jQuery($this).children('div').height());
+                        }
                     }
                 }
             });
@@ -46,13 +76,19 @@
                     });
                 }
 
-                if (scrollBottom) {
-                    jQuery($this).scrollTop(jQuery($this).children('div').height());
+                if (mobileDevice) {
+                    if (scrollBottom && !inputIsFocused($this)) {
+                        jQuery($this).scrollTop(jQuery($this).children('div').height());
+                    }
+                } else {
+                    if (scrollBottom) {
+                        jQuery($this).scrollTop(jQuery($this).children('div').height());
+                    }
                 }
             });
 
             jQuery(window).resize(function () {
-                var wrapperFitsWindow = 
+                var wrapperFitsWindow =
                     (jQuery($this).height() + parseInt(jQuery($this).css('bottom'))) <= jQuery(window).height();
 
                 if (!wrapperFitsWindow) {
@@ -61,8 +97,14 @@
                         'overflow-y': 'scroll'
                     });
 
-                    if (scrollBottom) {
-                        jQuery($this).scrollTop(jQuery($this).children('div').height());
+                    if (mobileDevice) {
+                        if (scrollBottom && !inputIsFocused($this)) {
+                            jQuery($this).scrollTop(jQuery($this).children('div').height());
+                        }
+                    } else {
+                        if (scrollBottom) {
+                            jQuery($this).scrollTop(jQuery($this).children('div').height());
+                        }
                     }
                 } else {
                     jQuery($this).css({
