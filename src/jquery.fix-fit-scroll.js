@@ -25,6 +25,10 @@
             mobileDevice: false
         };
 
+        if (options === undefined) {
+            options = {};
+        }
+
         var scrollBottom = options.scrollBottom;
         var mobileDevice = options.mobileDevice;
 
