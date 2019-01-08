@@ -1,30 +1,19 @@
 (function (jQuery) {
 
-    function inputIsFocused(element) {
+    function inputIsFocused() {
         var result = false;
 
-        var debug = [];
-        jQuery(element).find('input').each(function () {
-
-            debug.push(jQuery(this).html());
-
+        jQuery('body').find('input').each(function () {
             if (jQuery(this).is(":focus")) {
                 result = true;
             }
         });
 
-        jQuery(element).find('textarea').each(function () {
-
-            debug.push(jQuery(this).html());
-
+        jQuery('body').find('textarea').each(function () {
             if (jQuery(this).is(":focus")) {
                 result = true;
             }
         });
-
-        if (element === 'body') {
-            //alert(JSON.stringify(debug));
-        }
 
         return result;
     }
@@ -78,7 +67,7 @@
                     });
 
                     if (mobileDevice) {
-                        if (scrollBottom && !inputIsFocused($this) && !inputIsFocused('body')) {
+                        if (scrollBottom && !inputIsFocused()) {
                             jQuery($this).scrollTop(jQuery($this).children('div').height());
                         }
                     } else {
@@ -86,6 +75,7 @@
                             jQuery($this).scrollTop(jQuery($this).children('div').height());
                         }
                     }
+
 
                 } else {
                     jQuery($this).css({
@@ -109,7 +99,7 @@
                     });
 
                     if (mobileDevice) {
-                        if (scrollBottom && !inputIsFocused($this) && !inputIsFocused('body')) {
+                        if (scrollBottom && !inputIsFocused()) {
                             jQuery($this).scrollTop(jQuery($this).children('div').height());
                         }
                     } else {
@@ -136,7 +126,7 @@
                 }
 
                 if (mobileDevice) {
-                    if (scrollBottom && !inputIsFocused($this) && !inputIsFocused('body')) {
+                    if (scrollBottom && !inputIsFocused()) {
                         jQuery($this).scrollTop(jQuery($this).children('div').height());
                     }
                 } else {
