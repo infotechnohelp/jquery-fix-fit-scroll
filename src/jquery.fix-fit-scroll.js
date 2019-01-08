@@ -1,27 +1,8 @@
 (function (jQuery) {
 
-    function inputIsFocused() {
-        var result = false;
-
-        jQuery('body').find('input').each(function () {
-            if (jQuery(this).is(":focus")) {
-                result = true;
-            }
-        });
-
-        jQuery('body').find('textarea').each(function () {
-            if (jQuery(this).is(":focus")) {
-                result = true;
-            }
-        });
-
-        return result;
-    }
-
     jQuery.fn.fixFitScroll = function (options) {
 
         var defaultOptions = {
-            scrollBottom: true,
             mobileDevice: false
         };
 
@@ -29,12 +10,7 @@
             options = {};
         }
 
-        var scrollBottom = options.scrollBottom;
         var mobileDevice = options.mobileDevice;
-
-        if (options.scrollBottom === undefined) {
-            scrollBottom = defaultOptions.scrollBottom;
-        }
 
         if (options.mobileDevice === undefined) {
             mobileDevice = defaultOptions.mobileDevice;
@@ -49,11 +25,7 @@
             function windowResized() {
 
                 if (mobileDevice) {
-                    if (jQuery($this).scrollTop() > 0) {
-                        scrollTop = jQuery($this).scrollTop();
-                    } else {
-                        scrollTop = undefined;
-                    }
+                    scrollTop = jQuery($this).scrollTop();
                 }
 
                 var wrapperFitsWindow =
@@ -66,16 +38,9 @@
                         'overflow-y': 'scroll'
                     });
 
-                    if (mobileDevice) {
-                        if (scrollBottom && !inputIsFocused()) {
-                            jQuery($this).scrollTop(jQuery($this).children('div').height());
-                        }
-                    } else {
-                        if (scrollBottom) {
-                            jQuery($this).scrollTop(jQuery($this).children('div').height());
-                        }
+                    if (scrollBottom) {
+                        jQuery($this).scrollTop(jQuery($this).children('div').height());
                     }
-
 
                 } else {
                     jQuery($this).css({
@@ -86,6 +51,7 @@
             }
 
             windowResized();
+
 
             new Clay(this, {resize: false}).on('resize', function (size) {
 
@@ -98,18 +64,12 @@
                         'overflow-y': 'scroll'
                     });
 
-                    if (mobileDevice) {
-                        if (scrollBottom && !inputIsFocused()) {
-                            jQuery($this).scrollTop(jQuery($this).children('div').height());
-                        }
-                    } else {
-                        if (scrollBottom) {
-                            jQuery($this).scrollTop(jQuery($this).children('div').height());
-                        }
+                    if (scrollBottom) {
+                        jQuery($this).scrollTop(jQuery($this).children('div').height());
                     }
-                }
 
-                if (scrollTop !== undefined) {
+                }
+                if (mobileDevice) {
                     jQuery($this).scrollTop(scrollTop);
                 }
             });
@@ -125,14 +85,8 @@
                     });
                 }
 
-                if (mobileDevice) {
-                    if (scrollBottom && !inputIsFocused()) {
-                        jQuery($this).scrollTop(jQuery($this).children('div').height());
-                    }
-                } else {
-                    if (scrollBottom) {
-                        jQuery($this).scrollTop(jQuery($this).children('div').height());
-                    }
+                if (scrollBottom) {
+                    jQuery($this).scrollTop(jQuery($this).children('div').height());
                 }
             });
 
